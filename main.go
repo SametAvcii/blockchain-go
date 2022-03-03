@@ -12,9 +12,10 @@ type Block struct {
 	Hash     []byte
 	Data     []byte
 	PrevHash []byte
+	Nonce    int
 }
 type BlockChain struct {
-	blocks []*Block
+	Blocks []*Block
 }
 
 func (b *Block) DeriveHash() {
@@ -24,14 +25,14 @@ func (b *Block) DeriveHash() {
 }
 
 func CreateBlock(data string, prevHash []byte) *Block {
-	block := &Block{[]byte{}, []byte(data), prevHash}
+	block := &Block{[]byte{}, []byte(data), prevHash, 0}
 	block.DeriveHash()
 	return block
 }
 func (chain *BlockChain) AddBlock(data string) {
-	prevBlock := chain.blocks[len(chain.blocks)-1]
+	prevBlock := chain.Blocks[len(chain.Blocks)-1]
 	new := CreateBlock(data, prevBlock.Hash)
-	chain.blocks = append(chain.blocks, new)
+	chain.Blocks = append(chain.Blocks, new)
 }
 func Genesis() *Block {
 	return CreateBlock("Genesis", []byte{})
@@ -45,7 +46,7 @@ func main() {
 	chain.AddBlock("Second Block After Genesis")
 	chain.AddBlock("Third Block After Genesis")
 
-	for _, block := range chain.blocks {
+	for _, block := range chain.Blocks {
 		fmt.Printf("Previous Hash: %x\n", block.PrevHash)
 		fmt.Printf("Data in Block: %s\n", block.Data)
 		fmt.Printf("Hash: %x\n", block.Hash)
