@@ -1,14 +1,12 @@
 package main
 
 import (
-	"bytes"
-	"crypto/sha256"
 	"fmt"
 	"github.com/SametAvcii/blockchain-go.git/blockchain"
 	"strconv"
 )
 
-type Block struct {
+/*type Block struct {
 	Hash     []byte
 	Data     []byte
 	PrevHash []byte
@@ -39,9 +37,9 @@ func Genesis() *Block {
 }
 func InitBlockChain() *BlockChain {
 	return &BlockChain{[]*Block{Genesis()}}
-}
+}*/
 func main() {
-	chain := InitBlockChain()
+	chain := blockchain.InitBlockChain()
 	chain.AddBlock("First Block After Genesis")
 	chain.AddBlock("Second Block After Genesis")
 	chain.AddBlock("Third Block After Genesis")
