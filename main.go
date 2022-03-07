@@ -3,41 +3,30 @@ package main
 import (
 	"fmt"
 	"github.com/SametAvcii/blockchain-go.git/blockchain"
+	"os"
+	"runtime"
 	"strconv"
 )
 
-/*type Block struct {
-	Hash     []byte
-	Data     []byte
-	PrevHash []byte
-	Nonce    int
-}
-type BlockChain struct {
-	Blocks []*Block
+type CommandLine struct {
+	blockchain *blockchain.Blockchain
 }
 
-func (b *Block) DeriveHash() {
-	info := bytes.Join([][]byte{b.Data, b.PrevHash}, []byte{})
-	hash := sha256.Sum256(info)
-	b.Hash = hash[:]
-}
+func (cli *CommandLine) printUsage() {
+	fmt.Println("Usage:")
+	fmt.Println(" add -block BLOCK_DATA - add a block to the chain")
+	fmt.Println("print - Prints the blocks in the chain ")
 
-func CreateBlock(data string, prevHash []byte) *Block {
-	block := &Block{[]byte{}, []byte(data), prevHash, 0}
-	block.DeriveHash()
-	return block
 }
-func (chain *BlockChain) AddBlock(data string) {
-	prevBlock := chain.Blocks[len(chain.Blocks)-1]
-	new := CreateBlock(data, prevBlock.Hash)
-	chain.Blocks = append(chain.Blocks, new)
+func (cli *CommandLine) validateArgs() {
+	if len(os.Args) < 2 {
+		cli.printUsage()
+		runtime.Goexit()
+	}
 }
-func Genesis() *Block {
-	return CreateBlock("Genesis", []byte{})
+func (cli *CommandLine) addBlock(data string) {
+
 }
-func InitBlockChain() *BlockChain {
-	return &BlockChain{[]*Block{Genesis()}}
-}*/
 func main() {
 	chain := blockchain.InitBlockChain()
 	chain.AddBlock("First Block After Genesis")
@@ -53,4 +42,5 @@ func main() {
 		fmt.Printf("PoW: %s\n", strconv.FormatBool(pow.Validate()))
 		fmt.Println()
 	}
+
 }
